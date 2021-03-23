@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-
 import Nav from './Nav';
 
 const Logo = styled.h1`
@@ -10,7 +9,6 @@ const Logo = styled.h1`
   z-index: 2;
   background: red;
   transform: skew(-7deg);
-
   a {
     color: white;
     text-decoration: none;
@@ -25,7 +23,7 @@ const HeaderStyles = styled.header`
     display: grid;
     grid-template-columns: auto 1fr;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
   }
   .sub-bar {
     display: grid;
@@ -41,11 +39,11 @@ export default function Header() {
         <Logo>
           <Link href="/">Sick fits</Link>
         </Logo>
+        <Nav />
       </div>
       <div className="sub-bar">
         <span>Search</span>
       </div>
-      <Nav />
     </HeaderStyles>
   );
 }

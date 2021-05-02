@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { number } from 'prop-types';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -15,10 +14,11 @@ export const PAGINATION_QUERY = gql`
   }
 `;
 
-export default function Pagination({ page }) {
+export default function Pagination({ page }: { page: number }) {
   const { error, loading, data } = useQuery(PAGINATION_QUERY);
 
   if (loading) return 'Loading...';
+  // eslint-disable-next-line react/jsx-filename-extension
   if (error) return <DisplayError error={error} />;
 
   const { count } = data._allProductsMeta;
@@ -44,7 +44,3 @@ export default function Pagination({ page }) {
     </PaginationStyles>
   );
 }
-
-Pagination.propTypes = {
-  page: number,
-};

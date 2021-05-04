@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
 import DisplayError from '../components/ErrorMessage';
-import Form from '../components/styles/Form';
+// import Form from '../components/styles/Form';
 
 const SINGLE_PRODUCT_QUERY = gql`
   query SINGLE_PRODUCT_QUERY($id: ID!) {
@@ -48,7 +48,7 @@ export default function UpdatePage({ query }) {
   if (loading) return <p>loading...</p>;
 
   return (
-    <Form
+    <form
       onSubmit={async (e) => {
         e.preventDefault();
         const res = await updateProduct({
@@ -106,7 +106,7 @@ export default function UpdatePage({ query }) {
 
         <button type="submit">Update Product</button>
       </fieldset>
-    </Form>
+    </form>
   );
 }
 

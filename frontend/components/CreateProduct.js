@@ -4,7 +4,7 @@ import { Router } from 'next/router';
 import useForm from '../lib/useForm';
 import DisplayError from './ErrorMessage';
 import { ALL_PRODUCTS_QUERY } from './Products';
-import Form from './styles/Form';
+// import Form from './styles/Form';
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation CREATE_PRODUCT_MUTATION(
@@ -45,7 +45,7 @@ export default function CreateProduct() {
     }
   );
   return (
-    <Form
+    <form
       onSubmit={async (e) => {
         e.preventDefault();
         const res = await createProduct();
@@ -102,6 +102,6 @@ export default function CreateProduct() {
 
         <button type="submit">+ Add Product</button>
       </fieldset>
-    </Form>
+    </form>
   );
 }

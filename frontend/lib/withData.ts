@@ -6,6 +6,7 @@ import withApollo from 'next-with-apollo';
 import { endpoint, prodEndpoint } from '../config';
 import paginationField from './paginationField';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function createClient({ headers, initialState }) {
   return new ApolloClient({
     link: ApolloLink.from([

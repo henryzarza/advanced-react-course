@@ -1,8 +1,6 @@
 import { ReactChild } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
-import Header from './Header';
-
 const GlobalStyles = createGlobalStyle`
   html {
     --red: #F52020;
@@ -10,17 +8,16 @@ const GlobalStyles = createGlobalStyle`
     --gray: #3A3A3A;
     --gray-2: #616161;
     --gray-3: #898989;
+    --light-gray: #F4F5F7;
     --white: #FFF;
     --maxWidth: 1200px;
-    font-size: 62.5%;
+    --transition-duration: 290ms;
+    --transition-function: cubic-bezier(0.79,0.01,0.38,0.99);
+    font-size: 16px;
   }
   *, *::before, *::after {
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
-  }
-  body {
-    font-size: 1rem;
-    line-height: 1.3;
     margin: 0;
     padding: 0;
   }
@@ -30,7 +27,6 @@ export default function Page({ children }: { children: ReactChild }) {
   return (
     <>
       <GlobalStyles />
-      <Header />
       {children}
     </>
   );

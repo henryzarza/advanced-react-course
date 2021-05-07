@@ -1,9 +1,11 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
-// import Form from './styles/Form';
-import useForm from '../lib/useForm';
-// import { CURRENT_USER_QUERY } from '../components/User';
-import Error from './ErrorMessage';
+
+import useForm from '../../lib/useForm';
+import { FormElement } from '../styles/Form';
+import { MainButton } from '../styles/Button';
+import { Title, Form, FormContent, ButtonsContainer, ButtonLink } from '../styles/Signin';
+import Error from '../ErrorMessage';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -32,24 +34,24 @@ export default function SignUp() {
   });
 
   async function handleSubmit(e) {
-    e.preventDefault(); // stop the form from submitting
+    e.preventDefault();
     await signup().catch(console.error);
     resetForm();
-    // Send the email and password to the graphqlAPI
   }
 
   return (
-    <form method="POST" onSubmit={handleSubmit}>
-      <h2>Sign Up For an Account</h2>
-      <Error error={error} />
-      <fieldset>
+    <Form method="POST" onSubmit={handleSubmit}>
+      <FormContent>
+        <Title>sick<span>fits</span></Title>
+        <h2>Sing up</h2>
+        <Error error={error} />
         {data?.createUser && (
           <p>
             Signed up with {data.createUser.email} - Please Go Head and Sign in!
           </p>
         )}
-        <label htmlFor="email">
-          Your Name
+        <FormElement>
+          <label htmlFor="name">Your Name</label>
           <input
             type="text"
             name="name"
@@ -58,20 +60,20 @@ export default function SignUp() {
             value={inputs.name}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="email">
-          Email
+        </FormElement>
+        <FormElement>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
-            placeholder="Your Email Address"
+            placeholder="example@email.com"
             autoComplete="email"
             value={inputs.email}
             onChange={handleChange}
           />
-        </label>
-        <label htmlFor="password">
-          Password
+        </FormElement>
+        <FormElement>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
@@ -80,11 +82,14 @@ export default function SignUp() {
             value={inputs.password}
             onChange={handleChange}
           />
-        </label>
-        <button type="submit" disabled={loading}>
-          Sign In!
-        </button>
-      </fieldset>
-    </form>
+        </FormElement>
+        <MainButton type="submit" disabled={loading}>
+          Sign Up
+        </MainButton>
+        <ButtonsContainer>
+          <ButtonLink type="button">I already have an account</ButtonLink>
+        </ButtonsContainer>
+      </FormContent>
+    </Form>
   );
 }

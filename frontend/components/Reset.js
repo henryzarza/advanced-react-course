@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { string } from 'prop-types';
 // import Form from './styles/Form';
 import useForm from '../lib/useForm';
-import Error from './ErrorMessage';
+// import Error from './ErrorMessage';
 
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
@@ -44,7 +44,7 @@ export default function Reset({ token }) {
   return (
     <form method="POST" onSubmit={handleSubmit}>
       <h2>Reset Your Password</h2>
-      <Error error={error || successfulError} />
+      {/* <Error error={error || successfulError} /> */}
       <fieldset>
         {data?.redeemUserPasswordResetToken === null && (
           <p>Success! You can Now sign in</p>

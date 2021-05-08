@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
 import { shape, string } from 'prop-types';
-import ErrorMessage from '../../components/ErrorMessage';
+// import ErrorMessage from '../../components/ErrorMessage';
 import OrderStyles from '../../components/styles/OrderStyles';
 import formatMoney from '../../lib/formatMoney';
 
@@ -37,7 +37,7 @@ export default function SingleOrderPage({ query }) {
   });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <ErrorMessage error={error} />;
+  // if (error) return <ErrorMessage error={error} />;
 
   const { order } = data;
 

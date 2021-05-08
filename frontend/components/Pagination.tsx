@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import Link from 'next/link';
 import PaginationStyles from './styles/PaginationStyles';
-import DisplayError from './ErrorMessage';
+// import DisplayError from './ErrorMessage';
 import { perPage } from '../config';
 
 export const PAGINATION_QUERY = gql`
@@ -19,7 +19,7 @@ export default function Pagination({ page }: { page: number }) {
 
   if (loading) return 'Loading...';
   // eslint-disable-next-line react/jsx-filename-extension
-  if (error) return <DisplayError error={error} />;
+  // if (error) return <DisplayError error={error} />;
 
   const { count } = data._allProductsMeta;
   const pageCount = Math.ceil(count / perPage);

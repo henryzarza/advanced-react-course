@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Head from 'next/head';
 import styled from 'styled-components';
 
-import DisplayError from '../../components/ErrorMessage';
+// import DisplayError from '../../components/ErrorMessage';
 
 const ProductStyles = styled.div`
   display: grid;
@@ -46,7 +46,7 @@ export default function SingleProduct({ query }) {
   });
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <DisplayError error={error} />;
+  // if (error) return <DisplayError error={error} />;
 
   const { Product } = data;
   return (

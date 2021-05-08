@@ -36,12 +36,17 @@ export const Container = styled.div`
 
 export const FormContent = styled.div`
   max-width: 100%;
-  width: 360px;
+  padding: 1rem;
+  width: 23.5rem;
 `;
 
 export const ImageContainer = styled.div`
   flex: 1;
   position: relative;
+
+  @media (max-width: ${SM_BREAK_POINT}) {
+    display: none;
+  }
 `;
 
 export const ButtonsContainer = styled.div`
@@ -58,7 +63,7 @@ export const ButtonLink = styled.button`
   color: var(--red);
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 600;
   position: relative;
   text-decoration: underline;
   transition: color var(--transition-duration) var(--transition-function);

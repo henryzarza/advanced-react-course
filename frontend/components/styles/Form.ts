@@ -9,10 +9,13 @@ export const Form = styled.form`
 export const FormElement = styled.div`
   background-color: var(--white);
   border-radius: .25rem;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1.56rem;
+  padding-top: 0.625rem;
   overflow: hidden;
 
-  label {
+  label, small {
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.19rem;
@@ -46,5 +49,11 @@ export const FormElement = styled.div`
     ::-ms-input-placeholder {
     color: var(--gray-2);
     }
+  }
+
+  small {
+    color: var(--red);
+    font-weight: 400;
+    margin-bottom: 0.625rem;
   }
 `;

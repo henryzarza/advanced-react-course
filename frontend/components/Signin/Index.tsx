@@ -1,15 +1,16 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import { FormElement } from '../styles/Form';
 import { MainButton } from '../styles/Button';
 import { Title, Form, FormContent, ButtonsContainer, ButtonLink } from '../styles/Signin';
 import { CURRENT_USER_QUERY } from '../User';
 import Error from '../ErrorMessage';
-import { VALIDATION_SCHEMA, FIELD_NAMES } from './constant';
+import { VALIDATION_SCHEMA, FIELD_NAMES, SCREENS } from './constant';
 
-const SIGNIN_MUTATION = gql`
+export const SIGNIN_MUTATION = gql`
   mutation SIGNIN_MUTATION($email: String!, $password: String!) {
     authenticateUserWithPassword(email: $email, password: $password) {
       ... on UserAuthenticationWithPasswordSuccess {
@@ -27,12 +28,22 @@ const SIGNIN_MUTATION = gql`
   }
 `;
 
-export default function SignIn() {
+interface Props {
+  onChange: (param: string) => void;
+}
+
+export default function SignIn({ onChange }: Props) {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [signin, { data }] = useMutation(SIGNIN_MUTATION);
+  const router = useRouter();
 
   const onSubmit = (formData) => {
-    signin({ variables: formData, refetchQueries: [{ query: CURRENT_USER_QUERY }] });
+    signin({ variables: formData, refetchQueries: [{ query: CURRENT_USER_QUERY }] })
+      .then(response => {
+        if (response.data.authenticateUserWithPassword) {
+          router.push('/');
+        }
+      });
   };
 
   return (
@@ -65,8 +76,8 @@ export default function SignIn() {
         </FormElement>
         <MainButton type="submit">Sign In</MainButton>
         <ButtonsContainer>
-          <ButtonLink type="button">Don’t have an account?</ButtonLink>
-          <ButtonLink type="button">Reset password</ButtonLink>
+          <ButtonLink type="button" onClick={() => onChange(SCREENS.REGISTER)}>Don’t have an account?</ButtonLink>
+          <ButtonLink type="button" onClick={() => onChange(SCREENS.RESET_PASSWORD)}>Reset password</ButtonLink>
         </ButtonsContainer>
         {data?.authenticateUserWithPassword && <Error error={data.authenticateUserWithPassword} />}
       </FormContent>

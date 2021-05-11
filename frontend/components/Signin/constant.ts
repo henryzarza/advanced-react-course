@@ -1,10 +1,15 @@
 import { ERROR_MESSAGES } from '../../lib/errorMessages';
 
+export const SCREENS = {
+  SIGN_IN: 'signIn',
+  REGISTER: 'register',
+  RESET_PASSWORD: 'resetPassword'
+};
+
 export const FIELD_NAMES = {
   NAME: 'name',
   EMAIL: 'email',
   PASSWORD: 'password',
-  PASSWORD_REPEAT: 'passwordRepeat',
 };
 
 export const VALIDATION_SCHEMA = {
@@ -37,9 +42,6 @@ export const VALIDATION_SCHEMA = {
       value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/,
       message: ERROR_MESSAGES.password,
     },
-  },
-  PASSWORD_REPEAT: {
-    required: ERROR_MESSAGES.required,
   },
   NAME: {
     required: ERROR_MESSAGES.required,

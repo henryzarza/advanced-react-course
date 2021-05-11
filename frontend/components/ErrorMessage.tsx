@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client';
 import styled from 'styled-components';
 
 const ErrorStyles = styled.div`
@@ -28,7 +29,7 @@ interface Props {
         }[]
       }
     }
-  }
+  } | ApolloError
 }
 
 const ErrorMessage = ({ error }: Props) => {

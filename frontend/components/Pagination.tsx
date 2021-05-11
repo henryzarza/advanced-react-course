@@ -21,6 +21,7 @@ export default function Pagination({ page }: { page: number }) {
   // eslint-disable-next-line react/jsx-filename-extension
   // if (error) return <DisplayError error={error} />;
 
+  // TODO fix this is throwing an error
   const { count } = data._allProductsMeta;
   const pageCount = Math.ceil(count / perPage);
 

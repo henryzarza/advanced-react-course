@@ -1,11 +1,14 @@
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
-import useForm from '../../lib/useForm';
 import { FormElement } from '../styles/Form';
 import { MainButton } from '../styles/Button';
 import { Title, Form, FormContent, ButtonsContainer, ButtonLink } from '../styles/Signin';
 import Error from '../ErrorMessage';
+import { SCREENS, FIELD_NAMES, VALIDATION_SCHEMA } from './constant';
+import { CURRENT_USER_QUERY } from '../User';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -21,45 +24,42 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-export default function SignUp() {
-  const { inputs, handleChange, resetForm } = useForm({
-    email: '',
-    name: '',
-    password: '',
-  });
-  const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION, {
-    variables: inputs,
-    // refectch the currently logged in user
-    // refetchQueries: [{ query: CURRENT_USER_QUERY }],
+interface Props {
+  onChange: (param: string) => void;
+}
+
+export default function SignUp({ onChange }: Props) {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const router = useRouter();
+  const [signup, { loading, error }] = useMutation(SIGNUP_MUTATION, {
+    refetchQueries: [{ query: CURRENT_USER_QUERY }]
   });
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await signup().catch(console.error);
-    resetForm();
-  }
+  const onSubmit = (formData) => {
+    signup({ variables: formData, refetchQueries: [{ query: CURRENT_USER_QUERY }] })
+      .then(user => {
+        if (user.data?.createUser) {
+          router.push('/');
+        }
+      })
+      .catch(console.error);
+  };
 
   return (
-    <Form method="POST" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormContent>
         <Title>sick<span>fits</span></Title>
-        <h2>Sing up</h2>
-        <Error error={error} />
-        {data?.createUser && (
-          <p>
-            Signed up with {data.createUser.email} - Please Go Head and Sign in!
-          </p>
-        )}
         <FormElement>
           <label htmlFor="name">Your Name</label>
           <input
             type="text"
             name="name"
             placeholder="Your Name"
-            autoComplete="name"
-            value={inputs.name}
-            onChange={handleChange}
+            {...register(FIELD_NAMES.NAME, VALIDATION_SCHEMA.NAME)}
           />
+          {errors[FIELD_NAMES.NAME] && (
+            <small>{errors[FIELD_NAMES.NAME].message}</small>
+          )}
         </FormElement>
         <FormElement>
           <label htmlFor="email">Email</label>
@@ -67,10 +67,11 @@ export default function SignUp() {
             type="email"
             name="email"
             placeholder="example@email.com"
-            autoComplete="email"
-            value={inputs.email}
-            onChange={handleChange}
+            {...register(FIELD_NAMES.EMAIL, VALIDATION_SCHEMA.EMAIL)}
           />
+          {errors[FIELD_NAMES.EMAIL] && (
+            <small>{errors[FIELD_NAMES.EMAIL].message}</small>
+          )}
         </FormElement>
         <FormElement>
           <label htmlFor="password">Password</label>
@@ -78,17 +79,19 @@ export default function SignUp() {
             type="password"
             name="password"
             placeholder="Password"
-            autoComplete="password"
-            value={inputs.password}
-            onChange={handleChange}
+            {...register(FIELD_NAMES.PASSWORD, VALIDATION_SCHEMA.PASSWORD)}
           />
+          {errors[FIELD_NAMES.PASSWORD] && (
+            <small>{errors[FIELD_NAMES.PASSWORD].message}</small>
+          )}
         </FormElement>
         <MainButton type="submit" disabled={loading}>
           Sign Up
         </MainButton>
         <ButtonsContainer>
-          <ButtonLink type="button">I already have an account</ButtonLink>
+          <ButtonLink type="button" onClick={() => onChange(SCREENS.SIGN_IN)}>I already have an account</ButtonLink>
         </ButtonsContainer>
+        {error && <Error error={error} />}
       </FormContent>
     </Form>
   );

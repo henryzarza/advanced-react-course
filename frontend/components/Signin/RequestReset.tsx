@@ -6,6 +6,7 @@ import { MainButton } from '../styles/Button';
 import { Title, Form, FormContent, ButtonsContainer, ButtonLink } from '../styles/Signin';
 import useForm from '../../lib/useForm';
 import Error from '../ErrorMessage';
+import { SCREENS } from './constant';
 
 const REQUEST_RESET_MUTATION = gql`
   mutation REQUEST_RESET_MUTATION($email: String!) {
@@ -16,7 +17,11 @@ const REQUEST_RESET_MUTATION = gql`
   }
 `;
 
-export default function RequestReset() {
+interface Props {
+  onChange: (param: string) => void;
+}
+
+export default function RequestReset({ onChange }: Props) {
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
   });
@@ -39,7 +44,7 @@ export default function RequestReset() {
       <FormContent>
         <Title>sick<span>fits</span></Title>
         <h2>Request a Password Reset</h2>
-        <Error error={error} />
+        {error && <Error error={error} />}
         {data?.sendUserPasswordResetLink === null && (
           <p>Success! Check your email for a link!</p>
         )}
@@ -56,7 +61,7 @@ export default function RequestReset() {
         </FormElement>
         <MainButton type="submit" disabled={loading}>Request Reset</MainButton>
         <ButtonsContainer>
-          <ButtonLink type="button">Return to Login</ButtonLink>
+          <ButtonLink type="button" onClick={() => onChange(SCREENS.SIGN_IN)}>Return to Login</ButtonLink>
         </ButtonsContainer>
       </FormContent>
     </Form>

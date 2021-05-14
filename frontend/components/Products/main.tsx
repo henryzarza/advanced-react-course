@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { SM_BREAK_POINT } from '../../lib/cssVariables';
 import { MainButton } from '../styles/Button';
+import { ID_SECTION } from './our-products';
 
 const Section = styled.section`
   align-items: center;
@@ -63,12 +64,16 @@ export const Video = styled.video`
 `;
 
 export default function Main() {
+  const handleClick = () => {
+    document.getElementById(ID_SECTION).scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <Section>
       <HeroContent>
         <Title>High-Quality Equipment Just for you</Title>
         <Paragraph>Our equipment is made from selected and best quality materials that are suitable for your goals</Paragraph>
-        <MainButton type="button">Shop Now</MainButton>
+        <MainButton type="button" onClick={handleClick}>Shop Now</MainButton>
       </HeroContent>
       <Video src="https://res.cloudinary.com/dcqu0udnd/video/upload/v1620865628/sickfits/bgvideo_drkb4v.mp4" autoPlay muted loop />
     </Section>

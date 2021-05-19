@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Main from '../../components/Products/main';
 import Share from '../../components/Products/share';
 import Feature from '../../components/Products/feature';
-// import OurProducts from '../../components/Products/our-products';
+import OurProducts from '../../components/Products/our-products';
 // import Pagination from '../../components/Pagination.tsx';
 
 const MainContent = styled.main`
@@ -21,6 +21,7 @@ export default function ProductPage() {
       {/* <Pagination page={page || 1} /> */}
       <Main />
       <Feature />
+      <OurProducts />
       <Share />
     </MainContent>
   );

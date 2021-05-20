@@ -5,7 +5,7 @@ import Main from '../../components/Products/main';
 import Share from '../../components/Products/share';
 import Feature from '../../components/Products/feature';
 import OurProducts from '../../components/Products/our-products';
-// import Pagination from '../../components/Pagination.tsx';
+import Pagination from '../../components/Products/pagination';
 
 const MainContent = styled.main`
   display: flex;
@@ -18,10 +18,11 @@ export default function ProductPage() {
 
   return (
     <MainContent>
-      {/* <Pagination page={page || 1} /> */}
       <Main />
       <Feature />
       <OurProducts />
+      {/* <Pagination page={page || 1} /> */}
+      <Pagination page={1} />
       <Share />
     </MainContent>
   );

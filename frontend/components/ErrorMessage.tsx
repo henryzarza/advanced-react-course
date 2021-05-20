@@ -22,7 +22,7 @@ const ErrorStyles = styled.div`
 interface Props {
   error: {
     message: string;
-    networkError: {
+    networkError?: {
       result: {
         errors: {
           message: string;

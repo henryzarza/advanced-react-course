@@ -1,18 +1,19 @@
-// import { useQuery } from '@apollo/client';
-// import gql from 'graphql-tag';
+import { useQuery } from '@apollo/client';
+import gql from 'graphql-tag';
 import styled from 'styled-components';
+
+import Error from '../ErrorMessage';
 import Product from './product';
-// import { perPage } from '../../config';
+import { perPage } from '../../config';
 
 export const ID_SECTION = "ourProducts";
 
-/* export const ALL_PRODUCTS_QUERY = gql`
+export const ALL_PRODUCTS_QUERY = gql`
   query ALL_PRODUCTS_QUERY($skip: Int = 0, $first: Int) {
     allProducts(first: $first, skip: $skip) {
       id
       name
       price
-      description
       photo {
         id
         image {
@@ -21,7 +22,7 @@ export const ID_SECTION = "ourProducts";
       }
     }
   }
-`; */
+`;
 
 const Section = styled.section`
   display: flex;
@@ -47,27 +48,25 @@ const List = styled.div`
   grid-gap: 1.875rem;
 `;
 
-export default function OurProducts() {
-  /* const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
+export default function OurProducts({ page }: { page: number; }) {
+  const { data, error, loading } = useQuery(ALL_PRODUCTS_QUERY, {
     variables: {
       skip: page * perPage - perPage,
       first: perPage,
     },
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>; */
+  if (loading) return <h3>Loading...</h3>;
+
+  if (error) return <Error error={error.message} />;
 
   return (
     <Section id={ID_SECTION}>
       <Title>Our Products</Title>
       <List>
-        {[1,2,3,4,5,6,7,8].map(el => (
-          <Product key={el} />
-        ))}
-        {/* data.allProducts.map((product) => (
+        {data.allProducts.map((product) => (
           <Product key={product.id} product={product} />
-        )) */}
+        ))}
       </List>
     </Section>
   );

@@ -1,4 +1,4 @@
-// import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/dist/client/router';
 import styled from 'styled-components';
 
 import Main from '../../components/Products/main';
@@ -13,16 +13,15 @@ const MainContent = styled.main`
 `;
 
 export default function ProductPage() {
-  // const { query } = useRouter();
-  // const page = parseInt(query.page);
+  const { query } = useRouter();
+  const page = parseInt(typeof query.page === 'string' ? query.page : '1');
 
   return (
     <MainContent>
       <Main />
       <Feature />
-      <OurProducts />
-      {/* <Pagination page={page || 1} /> */}
-      <Pagination page={1} />
+      <OurProducts page={page} />
+      <Pagination page={page} />
       <Share />
     </MainContent>
   );

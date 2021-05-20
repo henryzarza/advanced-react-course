@@ -3,10 +3,7 @@ import styled from 'styled-components';
 
 import { Heart } from '../Icons';
 import { MainButton } from '../styles/Button';
-// import ItemStyles from './styles/ItemStyles';
-// import Title from './styles/Title';
-// import PriceTag from './styles/PriceTag';
-// import formatMoney from '../lib/formatMoney';
+import formatMoney from '../../lib/formatMoney';
 // import DeleteProduct from './DeleteProduct';
 // import AddToCart from './AddToCart';
 
@@ -125,32 +122,43 @@ const IcBtn = styled(MainButton)`
   }
 `;
 
-export default function Product() {
+interface Props {
+  product: {
+    id: string;
+    name: string;
+    price: number;
+    photo: {
+      id: string;
+      image: {
+        publicUrlTransformed: string;
+      }
+    }
+  }
+}
+
+export default function Product({ product }: Props) {
   return (
     <Item>
+      {/* TODO: implement this */}
       <HeartIc type="button">
         <Heart width={30} height={30} />
       </HeartIc>
-      <Link href="/product/3">
+      <Link href={`/product/${product.id}`}>
         <ImgContainer>
           <Img
-            src="https://res.cloudinary.com/dcqu0udnd/image/upload/v1621029999/sickfits/image_2_siz4xw.png"
-            alt="Mock"
-            // src={product?.photo?.image?.publicUrlTransformed}
-            // alt={product.name}
+            src={product.photo.image.publicUrlTransformed}
+            alt={product.name}
           />
         </ImgContainer>
       </Link>
       <Content>
-        <Name>Leviosa</Name>
-        <Price>$ 50.00</Price>
+        <Name>{product.name}</Name>
+        <Price>{formatMoney(product.price)}</Price>
         <InnerContent>
           <IcBtn type="button">Edit</IcBtn>
           <IcBtn type="button">Delete</IcBtn>
         </InnerContent>
       </Content>
-      {/* <Link href={`/product/${product.id}`}>{product.name}</Link> */}
-      {/* <PriceTag>{formatMoney(product.price)}</PriceTag> */}
       {/* <div className="buttonList">
         <Link
           href={{
@@ -168,18 +176,3 @@ export default function Product() {
     </Item>
   );
 }
-
-/* Product.propTypes = {
-  product: shape({
-    id: string,
-    name: string,
-    price: number,
-    description: string,
-    photo: shape({
-      id: string,
-      image: shape({
-        publicUrlTransformed: string,
-      }),
-    }),
-  }),
-}; */

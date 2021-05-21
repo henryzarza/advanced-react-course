@@ -1,6 +1,8 @@
 import { ReactChild } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
+import Navbar from './Navbar';
+
 const GlobalStyles = createGlobalStyle`
   html {
     --red: #F52020;
@@ -27,6 +29,7 @@ export default function Page({ children }: { children: ReactChild }) {
   return (
     <>
       <GlobalStyles />
+      <Navbar />
       {children}
     </>
   );

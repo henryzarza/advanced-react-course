@@ -28,4 +28,13 @@ function MyApp({ Component, pageProps, apollo }: Props) {
   );
 }
 
+MyApp.getInitialProps = async ({ Component, ctx }) => {
+  let pageProps = { query: '' };
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  pageProps.query = ctx.query;
+  return { pageProps };
+};
+
 export default withData(MyApp);

@@ -3,6 +3,7 @@ import { onError } from '@apollo/link-error';
 import { getDataFromTree } from '@apollo/client/react/ssr';
 import { createUploadLink } from 'apollo-upload-client';
 import withApollo from 'next-with-apollo';
+
 import { endpoint, prodEndpoint } from '../config';
 import paginationField from './paginationField';
 
@@ -36,6 +37,7 @@ function createClient({ headers, initialState }) {
       typePolicies: {
         Query: {
           fields: {
+            // TODO: fix this error
             allProducts: paginationField(),
           },
         },

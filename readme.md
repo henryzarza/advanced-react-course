@@ -8,7 +8,7 @@ Solution for the [Advanced React & GraphQL](https://AdvancedReact.com) course by
 
 I decided to do changes to the course's project and add more content and interesting things, I found some links, write downs, and tips that I wanted to share:
 
-- This is the [Figma](https://www.figma.com/file/745rXlzs53wABj0u5LvZ4v/Sick-fits?node-id=0%3A1) design I did to improve the UI and UX (I'm not a designer, I'm a mortal and simple developer that love design and creative things).
+- This is the [Figma](https://www.figma.com/file/745rXlzs53wABj0u5LvZ4v/Sick-fits?node-id=0%3A1) design (there are a couple of changes in the final UI that it doesn't be in the Figma design so sorry) I did to improve the UI and UX (I'm not a designer, I'm a mortal and simple developer that love design and creative things).
 
 
 ## Next.JS write downs

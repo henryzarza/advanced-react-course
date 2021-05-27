@@ -13,7 +13,7 @@ const PaginationStyles = styled.div`
   display: flex;
   justify-content: center;
   margin: 4rem auto;
-  max-width: 79.75rem;
+  max-width: var(--maxWidth);
   padding: 0 1rem;
 
   @media (max-width: ${SM_BREAK_POINT}) {

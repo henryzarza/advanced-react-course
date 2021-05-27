@@ -24,7 +24,7 @@ const Content = styled.div`
   align-items: center;
   display: flex;
   margin: 0 auto;
-  max-width: 79.75rem;
+  max-width: var(--maxWidth);
   padding: 0 1rem;
   width: 100%;
 `;

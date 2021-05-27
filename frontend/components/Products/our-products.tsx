@@ -28,7 +28,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: 79.75rem;
+  max-width: var(--maxWidth);
   padding: 0 1rem;
   width: 100%;
 `;

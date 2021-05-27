@@ -9,7 +9,7 @@ const Section = styled.section`
   flex-wrap: wrap;
   gap: 1rem;
   margin: 5.5rem auto;
-  max-width: 79.75rem;
+  max-width: var(--maxWidth);
   padding: 0 1rem;
   width: 100%;
 

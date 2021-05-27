@@ -12,7 +12,7 @@ const GlobalStyles = createGlobalStyle`
     --gray-3: #898989;
     --light-gray: #F4F5F7;
     --white: #FFF;
-    --maxWidth: 1200px;
+    --maxWidth: 79.75rem;
     --transition-duration: 290ms;
     --transition-function: cubic-bezier(0.79,0.01,0.38,0.99);
     font-size: 16px;

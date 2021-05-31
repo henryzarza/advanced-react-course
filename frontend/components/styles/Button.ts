@@ -16,6 +16,13 @@ export const MainButton = styled(Button)`
   transition: background-color var(--transition-duration) var(--transition-function), color var(--transition-duration) var(--transition-function);
   width: 100%;
 
+  &:disabled {
+    background-color: var(--gray-3);
+    border-color: var(--gray-3);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   &:hover,
   &:focus,
   &:active {

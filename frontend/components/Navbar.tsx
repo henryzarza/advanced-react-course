@@ -1,18 +1,31 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router'
 import styled from 'styled-components';
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 
-/* import { useUser } from './User';
-import SignOut from './SignOut';
+import { useUser, CURRENT_USER_QUERY } from './User';
+/*
 import { useCart } from '../lib/cartState';
 import CartCount from './CartCount'; */
 // import Cart from './Cart';
-// import Search from './Search';
-import { ShoppingCart, Logout, Search } from './Icons';
+import Search from './Search';
+import { ShoppingCart, Logout } from './Icons';
 
+const SIGN_OUT_MUTATION = gql`
+  mutation {
+    endSession
+  }
+`;
+
+/* Start styles */
 const NavContainer = styled.nav`
+  align-items: center;
   background-color: var(--white);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
   left: 0;
+  min-height: 5.875rem;
   padding: 1.375rem 0;
   position: fixed;
   right: 0;
@@ -122,47 +135,16 @@ const BtnContainer = styled.div`
   flex: 1;
   justify-content: flex-end;
 `;
-
-const InputContainer = styled.div`
-  min-height: 2.875rem;
-  position: relative;
-  max-width: 100%;
-  width: 29.75rem;
-
-  input {
-    background-color: var(--light-gray);
-    border: none;
-    border-radius: 0.25rem;
-    color: var(--gray);
-    font-size: 1.1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 0.75rem 0.75rem 0.75rem 2.75rem;
-    width: 100%;
-
-    ::-webkit-input-placeholder {
-      color: var(--gray-2);
-    }
-
-    :-ms-input-placeholder {
-      color: var(--gray-2);
-    }
-
-    ::placeholder {
-      color: var(--gray-2);
-    }
-  }
-
-  svg {
-    left: 0.75rem;
-    position: absolute;
-    top: 0.95rem;
-  }
-`;
+/* End styles */
 
 export default function Navbar() {
-  const user = true; // useUser();
+  const user = useUser();
   // const { openCart } = useCart();
+  const router = useRouter()
+
+  const [signout] = useMutation(SIGN_OUT_MUTATION, {
+    refetchQueries: [{ query: CURRENT_USER_QUERY }]
+  });
 
   return (
     <NavContainer>
@@ -184,20 +166,19 @@ export default function Navbar() {
             <Link href="/wishlist">
               <NavLink>Wishlist</NavLink>
             </Link>
-            <InputContainer>
-              <Search width={20} height={20} />
-              <input type="search" placeholder="Search for an amazing product" />
-            </InputContainer>
+            {(router.pathname === '/' || router.pathname === '/products') && (
+              <Search />
+            )}
             <BtnContainer>
               <IcButton type="button">
                 <ShoppingCart width={24} height={24} />
                 <Badge>10</Badge>
               </IcButton>
-              <IcButton type="button">
+              <IcButton type="button" onClick={signout}>
                 <Logout width={24} height={24} />
               </IcButton>
             </BtnContainer>
-            {/* <SignOut />
+            {/*
             <button type="button" onClick={openCart}>
               My Cart
               <CartCount

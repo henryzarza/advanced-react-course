@@ -3,7 +3,9 @@ import { resetIdCounter, useCombobox } from 'downshift';
 import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
 import { useRouter } from 'next/dist/client/router';
-import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
+
+import { DropDown, DropDownItem, InputContainer } from './styles/Search';
+import { Search as IcSearch } from './Icons';
 
 const SEARCH_PRODUCTS_QUERY = gql`
   query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
@@ -39,45 +41,33 @@ export default function Search() {
     inputValue,
     getMenuProps,
     getInputProps,
-    getComboboxProps,
     getItemProps,
     highlightedIndex,
   } = useCombobox({
     items,
     onInputValueChange() {
-      findItemsButChill({
-        variables: {
-          searchTerm: inputValue,
-        },
-      });
+      findItemsButChill({ variables: { searchTerm: inputValue }});
     },
-    onSelectedItemChange({ selectedItem }) {
-      router.push({
-        pathname: `/product/${selectedItem.id}`,
-      });
+    onSelectedItemChange({ selectedItem }: any) {
+      router.push({ pathname: `/product/${selectedItem.id}` });
     },
-    itemToString: (item) => item?.name || '',
+    itemToString: (item: any) => item?.name || '',
   });
+
   return (
-    <SearchStyles>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <div {...getComboboxProps()}>
-        <input
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...getInputProps({
-            type: 'search',
-            placeholder: 'Search for an Item',
-            id: 'search',
-            className: loading ? 'loading' : '',
-          })}
-        />
-      </div>
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+    <InputContainer>
+      <IcSearch width={20} height={20} />
+      <input
+        {...getInputProps({
+          type: 'search',
+          placeholder: 'Search for an amazing product',
+          id: 'search'
+        })}
+      />
       <DropDown {...getMenuProps()}>
         {isOpen &&
           items.map((item, index) => (
             <DropDownItem
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...getItemProps({ item, index })}
               key={item.id}
               highlighted={index === highlightedIndex}
@@ -94,6 +84,6 @@ export default function Search() {
           <DropDownItem>Sorry, No items found for {inputValue}</DropDownItem>
         )}
       </DropDown>
-    </SearchStyles>
+    </InputContainer>
   );
 }

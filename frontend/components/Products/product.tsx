@@ -110,6 +110,11 @@ const IcBtn = styled(MainButton)`
   font-weight: 500;
   padding: 0.5rem;
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   &:first-of-type {
     margin-right: 0.5rem;
   }
@@ -140,6 +145,7 @@ interface Props {
 export default function Product({ product }: Props) {
   return (
     <Item>
+      {/* <AddToCart id={product.id} /> */}
       {/* TODO: implement this */}
       <HeartIc type="button">
         <Heart width={30} height={30} />
@@ -156,24 +162,16 @@ export default function Product({ product }: Props) {
         <Name>{product.name}</Name>
         <Price>{formatMoney(product.price)}</Price>
         <InnerContent>
-          <IcBtn type="button">Edit</IcBtn>
+          <Link href={`/update/${product.id}`}>
+            <IcBtn>Edit</IcBtn>
+          </Link>
           <IcBtn type="button">Delete</IcBtn>
         </InnerContent>
       </Content>
-      {/* <div className="buttonList">
-        <Link
-          href={{
-            pathname: 'update',
-            query: {
-              id: product.id,
-            },
-          }}
-        >
-          Edit
-        </Link>
+      {/*
         <AddToCart id={product.id} />
         <DeleteProduct id={product.id}>Delete</DeleteProduct>
-      </div> */}
+      */}
     </Item>
   );
 }

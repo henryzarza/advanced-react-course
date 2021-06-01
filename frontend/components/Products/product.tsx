@@ -2,9 +2,8 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 import { Heart } from '../Icons';
-import { MainButton } from '../styles/Button';
 import formatMoney from '../../lib/formatMoney';
-// import DeleteProduct from './DeleteProduct';
+import Delete, { IcBtn } from './Delete';
 // import AddToCart from './AddToCart';
 
 const Img = styled.img`
@@ -103,31 +102,6 @@ const HeartIc = styled.button`
   }
 `;
 
-const IcBtn = styled(MainButton)`
-  background-color: var(--light-gray);
-  color: var(--gray);
-  border-color: var(--gray);
-  font-weight: 500;
-  padding: 0.5rem;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  &:first-of-type {
-    margin-right: 0.5rem;
-  }
-
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: var(--red);
-    border-color: var(--red);
-    color: var(--white);
-  }
-`;
-
 interface Props {
   product: {
     id: string;
@@ -165,12 +139,11 @@ export default function Product({ product }: Props) {
           <Link href={`/update/${product.id}`}>
             <IcBtn>Edit</IcBtn>
           </Link>
-          <IcBtn type="button">Delete</IcBtn>
+          <Delete id={product.id} />
         </InnerContent>
       </Content>
       {/*
         <AddToCart id={product.id} />
-        <DeleteProduct id={product.id}>Delete</DeleteProduct>
       */}
     </Item>
   );

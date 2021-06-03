@@ -20,8 +20,8 @@ export default function ProductPage() {
     <MainContent>
       <Main />
       <Feature />
-      <OurProducts page={page} />
-      <Pagination page={page} />
+      <OurProducts page={page > 0 ? page : 1} />
+      <Pagination page={page > 0 ? page : 1} />
       <Share />
     </MainContent>
   );

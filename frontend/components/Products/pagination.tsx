@@ -6,9 +6,10 @@ import styled from 'styled-components';
 
 import { SM_BREAK_POINT } from '../../lib/cssVariables';
 import { LeftArrow, RightArrow } from '../Icons';
-// import DisplayError from './ErrorMessage';
-// import { perPage } from '../../config';
+import Error from '../ErrorMessage';
+import { perPage } from '../../config';
 
+/* Start styles */
 const PaginationStyles = styled.div`
   display: flex;
   justify-content: center;
@@ -62,6 +63,7 @@ const StyledLink = styled.a`
     transition: fill var(--transition-duration) var(--transition-function);
   }
 `;
+/* End styles */
 
 export const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
@@ -72,15 +74,15 @@ export const PAGINATION_QUERY = gql`
 `;
 
 export default function Pagination({ page }: { page: number }) {
-  // const { error, loading, data } = useQuery(PAGINATION_QUERY);
+  const { error, loading, data } = useQuery(PAGINATION_QUERY);
 
-  // if (loading) return 'Loading...';
-  // if (error) return <DisplayError error={error} />;
+  if (loading) return <h3>Loading...</h3>;
 
-  // TODO fix this is throwing an error
-  /* const { count } = data._allProductsMeta;
-  const pageCount = Math.ceil(count / perPage); */
-  const pageCount = 4;
+  if (error) return <Error error={error} />;
+
+  const count = data?._allProductsMeta?.count || 0;
+  const pageCount = Math.ceil(count / perPage);
+  const mockArray = Array(pageCount).fill('');
 
   return (
     <PaginationStyles>
@@ -90,38 +92,20 @@ export default function Pagination({ page }: { page: number }) {
         </title>
       </Head>
       <Link href={`/products/${page - 1}`}>
-        <StyledLink aria-disabled="true">
+        <StyledLink aria-disabled={page <= 1}>
           <LeftArrow width={20} height={20} />
         </StyledLink>
       </Link>
-      {/* <Link prefetch href={href} passHref> */}
+      {mockArray.map((_, index) => (
+        <Link key={index} href={`/products/${index + 1}`}>
+          <StyledLink isActive={page === index + 1}>{index + 1}</StyledLink>
+        </Link>
+      ))}
       <Link href={`/products/${page - 1}`}>
-        <StyledLink isActive>1</StyledLink>
-      </Link>
-      <Link href={`/products/${page - 1}`}>
-        <StyledLink>2</StyledLink>
-      </Link>
-      <Link href={`/products/${page - 1}`}>
-        <StyledLink>3</StyledLink>
-      </Link>
-      <Link href={`/products/${page - 1}`}>
-        <StyledLink>4</StyledLink>
-      </Link>
-      <Link href={`/products/${page - 1}`}>
-        <StyledLink>
+        <StyledLink aria-disabled={page >= pageCount}>
           <RightArrow width={20} height={20} />
         </StyledLink>
       </Link>
-      {/* <Link href={`/products/${page - 1}`}>
-        <a aria-disabled={page <= 1}>← Prev</a>
-      </Link>
-      <p>
-        Page {page} of {pageCount}
-      </p>
-      <p>{count} Items Total</p>
-      <Link href={`/products/${page + 1}`}>
-        <a aria-disabled={page >= pageCount}>Next →</a>
-      </Link> */}
     </PaginationStyles>
   );
 }

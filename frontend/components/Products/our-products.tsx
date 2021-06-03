@@ -64,7 +64,7 @@ export default function OurProducts({ page }: { page: number; }) {
     <Section id={ID_SECTION}>
       <Title>Our Products</Title>
       <List>
-        {data.allProducts.map((product) => (
+        {data?.allProducts?.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </List>

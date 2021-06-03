@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Heart } from '../Icons';
 import formatMoney from '../../lib/formatMoney';
 import Delete, { IcBtn } from './Delete';
-// import AddToCart from './AddToCart';
+import AddToCart from '../Cart/AddToCart';
 
 const Img = styled.img`
   object-fit: cover;
@@ -119,7 +119,7 @@ interface Props {
 export default function Product({ product }: Props) {
   return (
     <Item>
-      {/* <AddToCart id={product.id} /> */}
+      <AddToCart id={product.id} />
       {/* TODO: implement this */}
       <HeartIc type="button">
         <Heart width={30} height={30} />
@@ -142,9 +142,6 @@ export default function Product({ product }: Props) {
           <Delete id={product.id} />
         </InnerContent>
       </Content>
-      {/*
-        <AddToCart id={product.id} />
-      */}
     </Item>
   );
 }

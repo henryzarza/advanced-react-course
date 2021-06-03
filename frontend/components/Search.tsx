@@ -43,6 +43,7 @@ export default function Search() {
     getInputProps,
     getItemProps,
     highlightedIndex,
+    getComboboxProps
   } = useCombobox({
     items,
     onInputValueChange() {
@@ -55,7 +56,7 @@ export default function Search() {
   });
 
   return (
-    <InputContainer>
+    <InputContainer {...getComboboxProps()}>
       <IcSearch width={20} height={20} />
       <input
         {...getInputProps({

@@ -58,7 +58,7 @@ export default function OurProducts({ page }: { page: number; }) {
 
   if (loading) return <h3>Loading...</h3>;
 
-  if (error) return <Error error={error.message} />;
+  if (error) return <Error error={error} />;
 
   return (
     <Section id={ID_SECTION}>

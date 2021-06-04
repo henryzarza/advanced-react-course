@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { FormElement } from '../styles/Form';
 import { MainButton } from '../styles/Button';
 import { Title, Form, FormContent, ButtonsContainer, ButtonLink } from '../styles/Signin';
-import { CURRENT_USER_QUERY } from '../User';
+import { CURRENT_USER_QUERY } from '../../lib/User';
 import Error from '../ErrorMessage';
 import { VALIDATION_SCHEMA, FIELD_NAMES, SCREENS } from './constant';
 

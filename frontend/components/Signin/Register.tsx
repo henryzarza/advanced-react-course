@@ -8,7 +8,7 @@ import { MainButton } from '../styles/Button';
 import { Title, Form, FormContent, ButtonsContainer, ButtonLink } from '../styles/Signin';
 import Error from '../ErrorMessage';
 import { SCREENS, FIELD_NAMES, VALIDATION_SCHEMA } from './constant';
-import { CURRENT_USER_QUERY } from '../User';
+import { CURRENT_USER_QUERY } from '../../lib/User';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 
-import { useUser, CURRENT_USER_QUERY } from './User';
+import { useUser, CURRENT_USER_QUERY } from '../lib/User';
 import { useCart } from './Cart/cartState';
 import Search from './Search';
 import { ShoppingCart, Logout } from './Icons';

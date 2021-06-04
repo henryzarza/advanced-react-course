@@ -101,7 +101,7 @@ export default function Pagination({ page }: { page: number }) {
           <StyledLink isActive={page === index + 1}>{index + 1}</StyledLink>
         </Link>
       ))}
-      <Link href={`/products/${page - 1}`}>
+      <Link href={`/products/${page + 1}`}>
         <StyledLink aria-disabled={page >= pageCount}>
           <RightArrow width={20} height={20} />
         </StyledLink>

@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 
+import { MainButton } from '../styles/Button';
 import { CURRENT_USER_QUERY } from '../User';
 
 /* Start styles */
@@ -37,17 +38,19 @@ const ADD_TO_CART_MUTATION = gql`
 
 interface Props {
   id: string;
+  isBig?: boolean;
 }
 
-export default function AddToCart({ id }: Props) {
+export default function AddToCart({ id, isBig }: Props) {
   const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
     variables: { id },
     refetchQueries: [{ query: CURRENT_USER_QUERY }]
   });
+  const Cmp = isBig ? MainButton : BtnCart;
 
   return (
-    <BtnCart disabled={loading} type="button" onClick={addToCart}>
+    <Cmp disabled={loading} type="button" onClick={addToCart}>
       Add{loading && 'ing'} to cart
-    </BtnCart>
+    </Cmp>
   );
 }

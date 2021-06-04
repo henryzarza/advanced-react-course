@@ -4,7 +4,7 @@ import Head from 'next/head';
 import styled from 'styled-components';
 
 import Error from '../../components/ErrorMessage';
-import { MainButton } from '../../components/styles/Button';
+import AddToCart from '../../components/Cart/AddToCart';
 import formatMoney from '../../lib/formatMoney';
 
 const Container = styled.div`
@@ -109,8 +109,7 @@ export default function SingleProduct({ query }: Props) {
             <Name>{data.Product.name}</Name>
             <Price>{formatMoney(data.Product.price)}</Price>
             <Description>{data.Product.description}</Description>
-            {/* TODO: Add to cart functionality */}
-            <MainButton type="button">Add to cart</MainButton>
+            <AddToCart id={query.id} isBig />
           </Details>
         </Content>
       )}

@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 
 import { MainButton } from '../styles/Button';
-import { CURRENT_USER_QUERY } from '../User';
+import { CURRENT_USER_QUERY } from '../../lib/User';
 
 /* Start styles */
 const BtnCart = styled.button`

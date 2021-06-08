@@ -6,6 +6,7 @@ import gql from 'graphql-tag';
 
 import { useUser, CURRENT_USER_QUERY } from '../lib/User';
 import { useCart } from './Cart/cartState';
+import Cart from './Cart/Cart';
 import Search from './Search';
 import { ShoppingCart, Logout } from './Icons';
 
@@ -177,6 +178,7 @@ export default function Navbar() {
                 <Logout width={24} height={24} />
               </IcButton>
             </BtnContainer>
+            <Cart />
           </>
         ) : (
           <Link href="/signin">

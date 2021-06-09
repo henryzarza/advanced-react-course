@@ -143,4 +143,11 @@ export const CheckoutFormStyles = styled.form`
   display: grid;
   grid-gap: 1rem;
   padding: 1rem;
+
+  p {
+    color: var(--red);
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
 `;

@@ -1,11 +1,12 @@
+import { useMemo } from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Head from 'next/head';
-import styled from 'styled-components';
 import Link from 'next/link';
-// import ErrorMessage from '../components/ErrorMessage';
+
+import Error from '../components/ErrorMessage';
 import formatMoney from '../lib/formatMoney';
-import OrderItemStyles from '../components/styles/OrderItemStyles';
+import { Container, OrderItem, OrderMeta, Images } from '../components/styles/Orders';
 
 const USER_ORDERS_QUERY = gql`
   query USER_ORDERS_QUERY {
@@ -32,54 +33,53 @@ const USER_ORDERS_QUERY = gql`
   }
 `;
 
-const OrderUl = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  grid-gap: 4rem;
-`;
-
 function countItemsInAnOrder(order) {
   return order.items.reduce((tally, item) => tally + item.quantity, 0);
 }
 
+// const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+
 export default function OrdersPage() {
   const { data, error, loading } = useQuery(USER_ORDERS_QUERY);
-  if (loading) return <p>Loading...</p>;
-  // if (error) return <ErrorMessage error={error} />;
+
+  if (loading) return <h4>Loading...</h4>;
+
+  if (error) return <Error error={error} />;
+
   const { allOrders } = data;
+
   return (
-    <div>
+    <>
       <Head>
         <title>Your Orders ({allOrders.length})</title>
       </Head>
       <h2>You have {allOrders.length} orders!</h2>
-      <OrderUl>
+      <Container>
         {allOrders.map((order) => (
-          <OrderItemStyles>
+          <OrderItem key={order.id}>
             <Link href={`/order/${order.id}`}>
               <a>
-                <div className="order-meta">
-                  <p>{countItemsInAnOrder(order)} Items</p>
-                  <p>
-                    {order.items.length} Product
-                    {order.items.length === 1 ? '' : 's'}
-                  </p>
-                  <p>{formatMoney(order.total)}</p>
-                </div>
-                <div className="images">
+                <OrderMeta>
+                  <span>{countItemsInAnOrder(order)} Items</span>
+                  <span>
+                    {order.items.length} Product{order.items.length === 1 ? '' : 's'}
+                  </span>
+                  <span>{formatMoney(order.total)}</span>
+                </OrderMeta>
+                <Images>
                   {order.items.map((item) => (
                     <img
-                      key={`image-${item.id}`}
+                      key={`${order.id}-${item.id}`}
                       src={item.photo?.image?.publicUrlTransformed}
                       alt={item.name}
                     />
                   ))}
-                </div>
+                </Images>
               </a>
             </Link>
-          </OrderItemStyles>
+          </OrderItem>
         ))}
-      </OrderUl>
-    </div>
+      </Container>
+    </>
   );
 }

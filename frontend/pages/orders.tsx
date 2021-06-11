@@ -61,18 +61,16 @@ export default function OrdersPage() {
               <a>
                 <OrderMeta>
                   <span>{countItemsInAnOrder(order)} Items</span>
-                  <span>
+                  <span className="full">
                     {order.items.length} Product{order.items.length === 1 ? '' : 's'}
                   </span>
                   <span>{formatMoney(order.total)}</span>
                 </OrderMeta>
                 <Images>
                   {order.items.map((item) => (
-                    <img
-                      key={`${order.id}-${item.id}`}
-                      src={item.photo?.image?.publicUrlTransformed}
-                      alt={item.name}
-                    />
+                    <div key={`${order.id}-${item.id}`}>
+                      <img src={item.photo?.image?.publicUrlTransformed} alt={item.name} />
+                    </div>
                   ))}
                 </Images>
               </a>

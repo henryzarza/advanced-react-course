@@ -42,6 +42,7 @@ const Content = styled.div`
 
 const Logo = styled.h1`
   color: var(--black);
+  cursor: pointer;
   font-size: 2rem;
   font-weight: 800;
   line-height: 2rem;

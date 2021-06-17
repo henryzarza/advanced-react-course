@@ -79,3 +79,76 @@ export const Images = styled.div`
     width: 100%;
   }
 `;
+
+export const OrderTitle = styled.h2`
+  border-bottom: 2px solid var(--red);
+  color: var(--gray);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+`;
+
+export const OrderItemContainer = styled.div`
+  background-color: var(--white);
+  border: 1px solid var(--light-gray);
+  border-radius: 0.25em;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
+  margin: 9rem auto 1rem;
+  max-width: calc(var(--maxWidth) - 25rem);
+  padding: 1.5rem;
+  width: 100%;
+`;
+
+export const Item = styled.div`
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  grid-gap: 1rem;
+
+  span {
+    color: var(--gray);
+    font-size: 1rem;
+    font-weight: 400;
+
+    &:first-of-type {
+      font-weight: 700;
+    }
+  }
+`;
+
+export const ItemsContainer = styled.div`
+  border-bottom: 1px solid var(--gray-3);
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
+
+  img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+  }
+`;
+
+export const Details = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+  grid-gap: 1rem;
+  text-align: center;
+
+  & > * {
+    color: var(--gray);
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 1rem 0;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  strong {
+    display: block;
+    margin-bottom: 1rem;
+  }
+`;

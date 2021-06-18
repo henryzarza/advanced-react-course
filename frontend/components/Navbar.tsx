@@ -37,6 +37,7 @@ const Content = styled.div`
   margin: 0 auto;
   max-width: var(--maxWidth);
   padding: 0 1rem;
+  position: relative;
   width: 100%;
 `;
 
@@ -75,6 +76,12 @@ const NavLink = styled.a`
     right: 0;
     transform: scaleX(0);
     transition: transform 0.4s cubic-bezier(1, -0.65, 0, 2.31);
+  }
+
+  &.last {
+    margin-right: 0;
+    position: absolute;
+    right: 0;
   }
 
   &:hover,
@@ -183,7 +190,7 @@ export default function Navbar() {
           </>
         ) : (
           <Link href="/signin">
-            <NavLink>Sign In</NavLink>
+            <NavLink className="last">Sign In</NavLink>
           </Link>
         )}
       </Content>

@@ -12,15 +12,15 @@ const transport = createTransport({
 function makeANiceEmail(text: string) {
   return `
     <div className="email" style="
-      border: 1px solid black;
+      border: 1px solid #F52020;
       padding: 20px;
       font-family: sans-serif;
       line-height: 2;
       font-size: 20px;
     ">
-      <h2>Hello There!</h2>
+      <h2>Hello there</h2>
       <p>${text}</p>
-      <p>😘, Wes Bos</p>
+      <p>Thank you for being part of this amazing platform 😘, Anonymous</p>
     </div>
   `;
 }
@@ -48,13 +48,23 @@ export async function sendPasswordResetEmail(
   // email the user a token
   const info = (await transport.sendMail({
     to,
-    from: 'wes@wesbos.com',
-    subject: 'Your password reset token!',
-    html: makeANiceEmail(`Your Password Reset Token is here!
-      <a href="${process.env.FRONTEND_URL}/reset?token=${resetToken}">Click Here to reset</a>
+    from: 'admin@sickfits.com',
+    subject: 'Your password reset token',
+    html: makeANiceEmail(`Your password reset token is here
+      <a href="${process.env.FRONTEND_URL}/reset?token=${resetToken}"
+        style="
+          color: white;
+          background-color: #F52020;
+          border-radius: 4px;
+          border: 1px solid black;
+          padding: 20px;
+          font-family: sans-serif;
+          line-height: 1.5;
+          font-size: 20px;"
+      >Click here to reset</a>
     `),
   })) as MailResponse;
   if (process.env.MAIL_USER.includes('ethereal.email')) {
-    console.log(`💌 Message Sent!  Preview it at ${getTestMessageUrl(info)}`);
+    console.log(`💌 Message Sent! Preview it at ${getTestMessageUrl(info)}`);
   }
 }

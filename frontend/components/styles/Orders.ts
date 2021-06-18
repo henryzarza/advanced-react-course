@@ -91,7 +91,7 @@ export const OrderTitle = styled.h2`
 
 export const OrderItemContainer = styled.div`
   background-color: var(--white);
-  border: 1px solid var(--light-gray);
+  border: 2px solid var(--light-gray);
   border-radius: 0.25em;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.25);
   margin: 9rem auto 1rem;
@@ -104,6 +104,13 @@ export const Item = styled.div`
   display: grid;
   grid-template-columns: 15rem 1fr;
   grid-gap: 1rem;
+  margin-bottom: 0.25rem;
+
+  &.separator {
+    border-bottom: 1px solid var(--gray-3);
+    margin-bottom: 0;
+    padding-bottom: 1rem;
+  }
 
   span {
     color: var(--gray);
@@ -117,38 +124,38 @@ export const Item = styled.div`
 `;
 
 export const ItemsContainer = styled.div`
-  border-bottom: 1px solid var(--gray-3);
-  display: flex;
-  gap: 10px;
-  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  grid-gap: 1rem;
+  margin-top: 1rem;
 
   img {
-    height: 200px;
+    align-self: center;
+    height: 12.5rem;
     object-fit: cover;
     width: 100%;
   }
 `;
 
 export const Details = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-  grid-gap: 1rem;
-  text-align: center;
+  border-bottom: 1px solid var(--gray-3);
+  display: flex;
+  flex-direction: column;
 
-  & > * {
+  span, p {
     color: var(--gray);
     font-size: 1rem;
     font-weight: 400;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
 
   h3 {
     font-size: 1.1rem;
     font-weight: 700;
+    margin-bottom: 0.5rem;
   }
 
   strong {
-    display: block;
-    margin-bottom: 1rem;
+    font-weight: 700;
   }
 `;

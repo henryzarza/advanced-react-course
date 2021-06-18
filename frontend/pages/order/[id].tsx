@@ -12,9 +12,6 @@ const SINGLE_ORDER_QUERY = gql`
       id
       charge
       total
-      # user {
-      #  id
-      # }
       items {
         id
         name
@@ -64,27 +61,25 @@ export default function SingleOrderPage({ query }: Props) {
           <span>{order.charge}</span>
         </Item>
         <Item>
+          <span>Item count:</span>
+          <span>{order.items.length}</span>
+        </Item>
+        <Item className="separator">
           <span>Order Total:</span>
           <span>{formatMoney(order.total)}</span>
         </Item>
-        <Item>
-          <span>ItemCount:</span>
-          <span>{order.items.length}</span>
-        </Item>
-        {/* <Item>
-          {order.items.map((item) => (
-            <ItemsContainer className="order-item" key={item.id}>
-              <img src={item.photo.image.publicUrlTransformed} alt={item.title} />
-              <Details>
-                <h3>{item.name}</h3>
-                <span>Qty: <strong>{item.quantity}</strong></span>
-                <span>Each: <strong>{formatMoney(item.price)}</strong></span>
-                <span>Sub Total: <strong>{formatMoney(item.price * item.quantity)}</strong></span>
-                <p>{item.description}</p>
-              </Details>
-            </ItemsContainer>
-          ))}
-        </Item> */}
+        {order.items.map((item) => (
+          <ItemsContainer key={item.id}>
+            <img src={item.photo.image.publicUrlTransformed} alt={item.title} />
+            <Details>
+              <h3>{item.name}</h3>
+              <span>Qty: <strong>{item.quantity}</strong></span>
+              <span>Each: <strong>{formatMoney(item.price)}</strong></span>
+              <span>Sub Total: <strong>{formatMoney(item.price * item.quantity)}</strong></span>
+              <p>{item.description}</p>
+            </Details>
+          </ItemsContainer>
+        ))}
       </OrderItemContainer>
     </>
   );

@@ -73,3 +73,11 @@ export const ButtonLink = styled.button`
     color: var(----gray);
   }
 `;
+
+export const SuccessText = styled.p`
+  color: var(--gray);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+`;

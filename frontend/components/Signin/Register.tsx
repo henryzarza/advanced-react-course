@@ -39,7 +39,7 @@ export default function SignUp({ onChange }: Props) {
     signup({ variables: formData, refetchQueries: [{ query: CURRENT_USER_QUERY }] })
       .then(user => {
         if (user.data?.createUser) {
-          router.push('/');
+          router.push('/signin');
         }
       })
       .catch(console.error);

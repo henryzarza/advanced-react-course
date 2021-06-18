@@ -40,7 +40,7 @@ export default function SignIn({ onChange }: Props) {
   const onSubmit = (formData) => {
     signin({ variables: formData, refetchQueries: [{ query: CURRENT_USER_QUERY }] })
       .then(response => {
-        if (response.data.authenticateUserWithPassword) {
+        if (response.data.authenticateUserWithPassword.code !== "FAILURE") {
           router.push('/');
         }
       });

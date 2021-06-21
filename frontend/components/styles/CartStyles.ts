@@ -151,3 +151,29 @@ export const CheckoutFormStyles = styled.form`
     margin-bottom: 0.5rem;
   }
 `;
+
+export const EmptyCart = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  svg {
+    height: 7rem;
+    margin-bottom: 1rem;
+    width: 7rem;
+
+    path {
+      fill: var(--gray-2);
+    }
+  }
+
+  h3 {
+    color: var(--gray-2);
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+`;

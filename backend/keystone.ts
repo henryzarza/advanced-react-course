@@ -12,6 +12,7 @@ import { CartItem } from './schemas/CartItem';
 import { OrderItem } from './schemas/OrderItem';
 import { Order } from './schemas/Order';
 import { Role } from './schemas/Role';
+import { WishList } from './schemas/Wishlist';
 import { insertSeedData } from './seed-data';
 import { sendPasswordResetEmail } from './lib/mail';
 import { extendGraphqlSchema } from './mutations';
@@ -30,7 +31,7 @@ const { withAuth } = createAuth({
   identityField: 'email',
   secretField: 'password',
   initFirstItem: {
-    fields: ['name', 'email', 'password'],
+    fields: ['name', 'email', 'password']
     // TODO: Add in inital roles here
   },
   passwordResetLink: {
@@ -46,7 +47,7 @@ export default withAuth(
       cors: {
         origin: [process.env.FRONTEND_URL],
         credentials: true,
-      },
+      }
     },
     db: {
       adapter: 'mongoose',
@@ -55,7 +56,7 @@ export default withAuth(
         if (process.argv.includes('--seed-data')) {
           await insertSeedData(keystone);
         }
-      },
+      }
     },
     lists: createSchema({
       User,
@@ -65,14 +66,15 @@ export default withAuth(
       OrderItem,
       Order,
       Role,
+      WishList
     }),
     extendGraphqlSchema,
     ui: {
-      isAccessAllowed: ({ session }) => !!session?.data,
+      isAccessAllowed: ({ session }) => !!session?.data
     },
     session: withItemData(statelessSessions(sessionConfig), {
       // GraphQL Query
-      User: `id name email role { ${permissionsList.join(' ')} }`,
-    }),
+      User: `id name email role { ${permissionsList.join(' ')} }`
+    })
   })
 );

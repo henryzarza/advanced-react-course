@@ -23,9 +23,17 @@ export const CURRENT_USER_QUERY = gql`
           }
         }
         wishlist {
+          id
           isChecked
           product {
             id
+            price
+            name
+            photo {
+              image {
+                publicUrlTransformed
+              }
+            }
           }
         }
       }

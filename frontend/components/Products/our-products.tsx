@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
@@ -5,6 +6,7 @@ import styled from 'styled-components';
 import Error from '../ErrorMessage';
 import Product from './product';
 import { perPage } from '../../config';
+import { useUser } from '../../lib/User';
 
 export const ID_SECTION = "ourProducts";
 
@@ -55,6 +57,15 @@ export default function OurProducts({ page }: { page: number; }) {
       first: perPage,
     },
   });
+  const me = useUser();
+
+  const isProductChecked = useCallback((productId: string) => {
+    if (me.wishlist) {
+      const wishItem = me.wishlist.find(el => el.product.id === productId);
+      return wishItem ? wishItem.isChecked : false;
+    }
+    return false;
+  }, [me]);
 
   if (loading) return <h3>Loading...</h3>;
 
@@ -65,7 +76,7 @@ export default function OurProducts({ page }: { page: number; }) {
       <Title>Our Products</Title>
       <List>
         {data?.allProducts?.map((product) => (
-          <Product key={product.id} product={product} />
+          <Product key={product.id} product={product} isChecked={isProductChecked(product.id)} />
         ))}
       </List>
     </Section>

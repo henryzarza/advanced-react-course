@@ -22,6 +22,12 @@ export const CURRENT_USER_QUERY = gql`
             }
           }
         }
+        wishlist {
+          isChecked
+          product {
+            id
+          }
+        }
       }
     }
   }

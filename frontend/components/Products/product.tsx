@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 
 import { Heart } from '../Icons';
 import formatMoney from '../../lib/formatMoney';
 import Delete, { IcBtn } from './Delete';
 import AddToCart from '../Cart/AddToCart';
+import { CURRENT_USER_QUERY } from '../../lib/User';
 
 const Img = styled.img`
   object-fit: cover;
@@ -89,15 +92,29 @@ const HeartIc = styled.button`
   z-index: 1;
 
   svg path {
-    stroke: var(--white);
+    fill: ${(props) => (props.isChecked ? 'var(--red)' : 'transparent')};
+    stroke: ${(props) => (props.isChecked ? 'var(--red)' : 'var(--white)')};
     transition: all var(--transition-duration) var(--transition-function);
   }
 
-  &:hover,
-  &:focus {
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  &:hover {
     svg path {
       fill: var(--red);
       stroke: var(--red);
+    }
+  }
+`;
+
+const ADD_TO_WISHLIST = gql`
+  mutation ADD_TO_WISHLIST_MUTATION($id: ID!) {
+    addToWishlist(productId: $id) {
+      id
     }
   }
 `;
@@ -113,15 +130,20 @@ interface Props {
         publicUrlTransformed: string;
       }
     }
-  }
+  };
+  isChecked: boolean;
 }
 
-export default function Product({ product }: Props) {
+export default function Product({ product, isChecked }: Props) {
+  const [addToWishlist, { loading }] = useMutation(ADD_TO_WISHLIST, {
+    variables: { id: product.id },
+    refetchQueries: [{ query: CURRENT_USER_QUERY }]
+  });
+
   return (
     <Item>
       <AddToCart id={product.id} />
-      {/* TODO: implement this */}
-      <HeartIc type="button">
+      <HeartIc type="button" onClick={addToWishlist} disabled={loading} isChecked={isChecked}>
         <Heart width={30} height={30} />
       </HeartIc>
       <Link href={`/product/${product.id}`}>

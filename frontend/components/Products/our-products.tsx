@@ -60,7 +60,7 @@ export default function OurProducts({ page }: { page: number; }) {
   const me = useUser();
 
   const isProductChecked = useCallback((productId: string) => {
-    if (me.wishlist) {
+    if (me && me.wishlist) {
       const wishItem = me.wishlist.find(el => el.product.id === productId);
       return wishItem ? wishItem.isChecked : false;
     }

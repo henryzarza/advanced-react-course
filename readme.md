@@ -64,7 +64,20 @@ I decided to do changes to the course's project and add more content and interes
 ## React Testing Library
 <details>
   <summary>Click to expand!</summary>
-  Under construction
+
+  ## Types of Queries
+  
+  |  **Type of Query**  |  **0 Matches**  |  **1 Match**  |  **>1 Matches**  |  **Retry (Async/Await)**  |
+  |---|---|---|---|---|
+  | Single Element  |   |   |   |   |
+  | getBy... | Throw error | Return element  |  Throw error  | No  |
+  | queryBy...	 |  Return null  |  Return element  |  Throw error  |  No  |
+  | findBy... |  Throw error  |  Return element  |  Throw error  |  Yes  |
+  | Multiple Elements  |   |   |   |   |
+  | getAllBy...  |  Throw error  |  Return array  |  Return array  |   No  |
+  | queryAllBy...  |  Return []  |  Return array  |  Return array  |  No  |
+  | findAllBy...  |  Throw error  |  Return array  |  Return array  |  Yes  |
+
 </details>
 
 ## Getting Help

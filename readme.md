@@ -64,7 +64,53 @@ I decided to do changes to the course's project and add more content and interes
 ## React Testing Library
 <details>
   <summary>Click to expand!</summary>
-  Under construction
+
+  ## Types of Queries
+  
+  |  **Type of Query**  |  **0 Matches**  |  **1 Match**  |  **>1 Matches**  |  **Retry (Async/Await)**  |
+  |---|---|---|---|---|
+  | Single Element  |   |   |   |   |
+  | getBy... | Throw error | Return element  |  Throw error  | No  |
+  | queryBy...	 |  Return null  |  Return element  |  Throw error  |  No  |
+  | findBy... |  Throw error  |  Return element  |  Throw error  |  Yes  |
+  | Multiple Elements  |   |   |   |   |
+  | getAllBy...  |  Throw error  |  Return array  |  Return array  |   No  |
+  | queryAllBy...  |  Return []  |  Return array  |  Return array  |  No  |
+  | findAllBy...  |  Throw error  |  Return array  |  Return array  |  Yes  |
+
+  ### **findBy** Queries
+  findBy methods are a combination of [getBy queries](https://testing-library.com/docs/queries/about/#types-of-queries) and [waitFor](https://testing-library.com/docs/dom-testing-library/api-async/#waitfor). They accept the waitFor options as the last argument (e.g. await screen.findByText('text', queryOptions, waitForOptions)).
+  
+  **findBy** queries work when you expect an element to appear but the change to the DOM might not happen immediately.
+  
+  ```
+  function waitFor<T>(
+    callback: () => T | Promise<T>,
+    options?: {
+      container?: HTMLElement
+      timeout?: number
+      interval?: number
+      onTimeout?: (error: Error) => Error
+      mutationObserverOptions?: MutationObserverInit
+    },
+  ): Promise<T>
+  ```
+  When using fake timers, you need to remember to restore the timers after your test runs.
+
+  The main reason to do that is to prevent 3rd party libraries running after your test finishes (e.g cleanup functions), from being coupled to your fake timers and use real timers instead.
+
+  For that you usually call **useRealTimers** in **afterEach**.
+
+  It's important to also call **runOnlyPendingTimers** before switching to real timers. This will ensure you flush all the pending timers before you switch to real timers. If you don't progress the timers and just switch to real timers, the scheduled tasks won't get executed and you'll get an unexpected behavior. This is mostly important for 3rd parties that schedule tasks without you being aware of it.
+  
+  ```
+  // Running all pending timers and switching to real timers using Jest
+  afterEach(() => {
+    jest.runOnlyPendingTimers()
+    jest.useRealTimers()
+  })
+  ```
+  
 </details>
 
 ## Getting Help

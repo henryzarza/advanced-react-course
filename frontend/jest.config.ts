@@ -9,6 +9,7 @@ const config: Config.InitialOptions = {
   setupFiles: [
     "@testing-library/react/dont-cleanup-after-each"
   ],
+  setupFilesAfterEnv: ['./jest.setup.ts'],
   coverageThreshold: {
     global: {
       branches: 70,

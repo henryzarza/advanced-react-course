@@ -53,6 +53,7 @@ export default function SignIn({ onChange }: Props) {
         <FormElement>
           <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="example@email.com"
@@ -65,6 +66,7 @@ export default function SignIn({ onChange }: Props) {
         <FormElement>
           <label htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
             name="password"
             placeholder="••••••••"

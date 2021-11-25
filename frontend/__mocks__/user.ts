@@ -1,4 +1,5 @@
 import { SIGNIN_MUTATION } from '../components/Signin/Index';
+import { SIGNUP_MUTATION } from '../components/Signin/Register';
 import { CURRENT_USER_QUERY } from '../lib/User';
 
 export const SIGN_IN_MOCK = {
@@ -19,6 +20,24 @@ export const SIGN_IN_MOCK = {
         },
         code: "SUCCESS",
         message: "Message success"
+      }
+    }
+  },
+};
+
+export const REGISTER_MOCK = {
+  request: {
+    query: SIGNUP_MUTATION,
+    variables: {
+      email: 'email@test.io',
+      name: "User Test",
+      password: 'Test12345.'
+    },
+  },
+  result: {
+    data: {
+      createUser: {
+        id: "123"
       }
     }
   },

@@ -10,7 +10,7 @@ import Error from '../ErrorMessage';
 import { SCREENS, FIELD_NAMES, VALIDATION_SCHEMA } from './constant';
 import { CURRENT_USER_QUERY } from '../../lib/User';
 
-const SIGNUP_MUTATION = gql`
+export const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
     $email: String!
     $name: String!
@@ -18,8 +18,6 @@ const SIGNUP_MUTATION = gql`
   ) {
     createUser(data: { email: $email, name: $name, password: $password }) {
       id
-      email
-      name
     }
   }
 `;
@@ -52,6 +50,7 @@ export default function SignUp({ onChange }: Props) {
         <FormElement>
           <label htmlFor="name">Your Name</label>
           <input
+            id="name"
             type="text"
             name="name"
             placeholder="Your Name"
@@ -64,6 +63,7 @@ export default function SignUp({ onChange }: Props) {
         <FormElement>
           <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="example@email.com"
@@ -76,6 +76,7 @@ export default function SignUp({ onChange }: Props) {
         <FormElement>
           <label htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
             name="password"
             placeholder="Password"

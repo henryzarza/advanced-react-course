@@ -1,8 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import { SIGN_IN_MOCK, CURRENT_USER_MOCK } from '../../__mocks__/user';
+import { SIGN_IN_MOCK, CURRENT_USER_MOCK, REGISTER_MOCK } from '../../__mocks__/user';
 import SignIn from '../Signin/Index';
+import Register from '../Signin/Register';
 import { SCREENS } from '../Signin/constant';
 
 const mockRouteChange = jest.fn();
@@ -96,7 +97,63 @@ describe("Signin", () => {
 });
 
 describe("Register", () => {
-  it.todo("should show fields validations");
+  const mockOnChange = jest.fn();
+  function renderWithContext() {
+    return render(
+      <MockedProvider mocks={[REGISTER_MOCK, CURRENT_USER_MOCK]} addTypename={false} >
+        <Register onChange={mockOnChange} />
+      </MockedProvider>
+    );
+  }
+
+  it("should show fields validations", async () => {
+    renderWithContext();
+
+    const name = screen.getByRole('textbox', { name: /name/i });
+    const email = screen.getByRole('textbox', { name: /email/i });
+    const password = screen.getByLabelText(/password/i);
+    const signUpBtn = screen.getByRole('button', { name: /sign up/i });
+
+    expect(name).toBeInTheDocument();
+    expect(email).toBeInTheDocument();
+    expect(password).toBeInTheDocument();
+    expect(signUpBtn).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /sick fits/i })).toBeInTheDocument();
+
+    fireEvent.change(name, { target: { value: '12' } });
+    fireEvent.change(email, { target: { value: 'email@test' } });
+    fireEvent.click(signUpBtn);
+
+    expect(await screen.findByText(/Format of email is wrong/i)).toBeInTheDocument();
+    expect(await screen.findByText(/The length should be greater than/i)).toBeInTheDocument();
+    expect(await screen.findByText(/This field is required/i)).toBeInTheDocument();
+  });
+
+  it("should sign up", async () => {
+    renderWithContext();
+
+    const name = screen.getByRole('textbox', { name: /name/i });
+    const email = screen.getByRole('textbox', { name: /email/i });
+    const password = screen.getByLabelText(/password/i);
+    const signUpBtn = screen.getByRole('button', { name: /sign up/i });
+
+    fireEvent.change(name, { target: { value: 'User Test' } });
+    fireEvent.change(email, { target: { value: 'email@test.io' } });
+    fireEvent.change(password, { target: { value: 'Test12345.' } });
+    fireEvent.click(signUpBtn);
+
+    await waitFor(() => new Promise((res) => setTimeout(res, 0)));
+
+    expect(mockRouteChange).toBeCalledWith("/signin");
+  });
+
+  it("should send sign in link when link is clicked", () => {
+    renderWithContext();
+    const signInBtn = screen.getByRole('button', { name: /I already have an account/i });
+    expect(signInBtn).toBeInTheDocument();
+    fireEvent.click(signInBtn);
+    expect(mockOnChange).toBeCalledWith(SCREENS.SIGN_IN);
+  });
 });
 
 describe("RequestReset", () => {

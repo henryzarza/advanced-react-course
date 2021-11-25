@@ -1,6 +1,7 @@
 import { SIGNIN_MUTATION } from '../components/Signin/Index';
 import { SIGNUP_MUTATION } from '../components/Signin/Register';
 import { REQUEST_RESET_MUTATION } from '../components/Signin/RequestReset';
+import { RESET_MUTATION } from '../components/Signin/Reset';
 import { CURRENT_USER_QUERY } from '../lib/User';
 
 export const SIGN_IN_MOCK = {
@@ -54,6 +55,22 @@ export const REQUEST_RESET_MOCK = {
   result: {
     data: {
       sendUserPasswordResetLink: null
+    }
+  },
+};
+
+export const RESET_MUTATION_MOCK = {
+  request: {
+    query: RESET_MUTATION,
+    variables: {
+      email: 'email@test.io',
+      password: 'Test12345.',
+      token: 'qwerty-123',
+    },
+  },
+  result: {
+    data: {
+      redeemUserPasswordResetToken: null
     }
   },
 };

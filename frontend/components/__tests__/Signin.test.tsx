@@ -1,10 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import { SIGN_IN_MOCK, CURRENT_USER_MOCK, REGISTER_MOCK, REQUEST_RESET_MOCK } from '../../__mocks__/user';
+import { SIGN_IN_MOCK, CURRENT_USER_MOCK, REGISTER_MOCK, REQUEST_RESET_MOCK, RESET_MUTATION_MOCK } from '../../__mocks__/user';
 import SignIn from '../Signin/Index';
 import Register from '../Signin/Register';
 import RequestReset from '../Signin/RequestReset';
+import Reset from '../Signin/Reset';
 import { SCREENS } from '../Signin/constant';
 
 const mockRouteChange = jest.fn();
@@ -159,9 +160,9 @@ describe("Register", () => {
 
 describe("RequestReset", () => {
   const mockOnChange = jest.fn();
-  function renderWithContext(signInMock = REQUEST_RESET_MOCK) {
+  function renderWithContext() {
     return render(
-      <MockedProvider mocks={[signInMock, CURRENT_USER_MOCK]} addTypename={false} >
+      <MockedProvider mocks={[REQUEST_RESET_MOCK, CURRENT_USER_MOCK]} addTypename={false} >
         <RequestReset onChange={mockOnChange} />
       </MockedProvider>
     );
@@ -205,5 +206,40 @@ describe("RequestReset", () => {
 });
 
 describe("Reset", () => {
-  it.todo("should reset password");
+  function renderWithContext() {
+    return render(
+      <MockedProvider mocks={[RESET_MUTATION_MOCK, CURRENT_USER_MOCK]} addTypename={false} >
+        <Reset token="qwerty-123" />
+      </MockedProvider>
+    );
+  }
+
+  it("should show email validation", async () => {
+    renderWithContext();
+
+    const resetBtn = screen.getByRole('button', { name: /request reset/i });
+
+    expect(screen.getByRole('heading', { name: /Reset Your Password/i })).toBeInTheDocument();
+    expect(resetBtn).toBeInTheDocument();
+
+    fireEvent.click(resetBtn);
+
+    expect(await screen.findAllByText(/This field is required/i)).toHaveLength(2);
+  });
+
+  it("should reset password when request reset button is clicked", async () => {
+    renderWithContext();
+
+    const email = screen.getByRole('textbox', { name: /email/i });
+    const password = screen.getByLabelText(/password/i);
+    const requestBtn = screen.getByRole('button', { name: /request reset/i });
+
+    fireEvent.change(email, { target: { value: 'email@test.io' } });
+    fireEvent.change(password, { target: { value: 'Test12345.' } });
+    fireEvent.click(requestBtn);
+
+    await waitFor(() => new Promise((res) => setTimeout(res, 0)));
+
+    expect(await screen.findByText(/¡Success! You can now sign in/i)).toBeInTheDocument();
+  });
 });

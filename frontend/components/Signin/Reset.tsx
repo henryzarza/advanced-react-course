@@ -8,7 +8,7 @@ import { Title, Form, FormContent, SuccessText } from '../styles/Signin';
 import Error from '../ErrorMessage';
 import { FIELD_NAMES, VALIDATION_SCHEMA } from './constant';
 
-const RESET_MUTATION = gql`
+export const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
     $email: String!
     $password: String!
@@ -20,7 +20,6 @@ const RESET_MUTATION = gql`
       password: $password
     ) {
       code
-      message
     }
   }
 `;
@@ -34,11 +33,7 @@ export default function Reset({ token }: Props) {
   const [reset, { data, loading, error }] = useMutation(RESET_MUTATION);
 
   const onSubmit = (formData) => {
-    reset({ variables: { ...formData, token }})
-      .then(user => {
-        console.log('user', user);
-      })
-      .catch(console.error);
+    reset({ variables: { ...formData, token }}).catch(console.error);
   };
 
   const successfulError = data?.redeemUserPasswordResetToken?.code
@@ -56,6 +51,7 @@ export default function Reset({ token }: Props) {
         <FormElement>
           <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="example@email.com"
@@ -68,6 +64,7 @@ export default function Reset({ token }: Props) {
         <FormElement>
           <label htmlFor="password">Password</label>
           <input
+            id="password"
             type="password"
             name="password"
             placeholder="Password"

@@ -3,6 +3,7 @@ import { MockedProvider } from '@apollo/client/testing';
 
 import { SIGN_IN_MOCK, CURRENT_USER_MOCK } from '../../__mocks__/user';
 import SignIn from '../Signin/Index';
+import { SCREENS } from '../Signin/constant';
 
 const mockRouteChange = jest.fn();
 jest.mock("next/router", () => ({
@@ -15,15 +16,15 @@ jest.mock("next/router", () => ({
 
 describe("Signin", () => {
   const mockOnChange = jest.fn();
-  function renderWithContext() {
+  function renderWithContext(signInMock = SIGN_IN_MOCK) {
     return render(
-      <MockedProvider mocks={[SIGN_IN_MOCK, CURRENT_USER_MOCK]} addTypename={false} >
+      <MockedProvider mocks={[signInMock, CURRENT_USER_MOCK]} addTypename={false} >
         <SignIn onChange={mockOnChange} />
       </MockedProvider>
     );
   }
 
-  it("should show fiels validations", async () => {
+  it("should show fields validations", async () => {
     renderWithContext();
 
     const email = screen.getByRole('textbox', { name: /email/i });
@@ -58,14 +59,40 @@ describe("Signin", () => {
     expect(mockRouteChange).toBeCalledWith("/");
   });
 
-  it.todo("should show authenticateUserWithPassword error");
+  it("should show authenticateUserWithPassword error", async () => {
+    const mock = { ...SIGN_IN_MOCK };
+    mock.result.data.authenticateUserWithPassword.code = "FAILURE";
+    mock.result.data.authenticateUserWithPassword.message = "Error message";
+    renderWithContext(mock);
 
-  it.todo("should send Register link when link is clicked");
+    const email = screen.getByRole('textbox', { name: /email/i });
+    const password = screen.getByLabelText(/password/i);
+    const signInBtn = screen.getByRole('button', { name: /sign in/i });
 
-  // const linkBtn = screen.getByRole('button', { name: /have an account/i });
-  // const linkBtn = screen.getByRole('button', { name: /reset password/i });
+    fireEvent.change(email, { target: { value: 'email@test.io' } });
+    fireEvent.change(password, { target: { value: 'Test12345.' } });
+    fireEvent.click(signInBtn);
 
-  it.todo("should send Reset link when link is clicked");
+    await waitFor(() => new Promise((res) => setTimeout(res, 0)));
+
+    expect(await screen.findByText(/Error message/i)).toBeInTheDocument();
+  });
+
+  it("should send Register link when link is clicked", () => {
+    renderWithContext();
+    const registerBtn = screen.getByRole('button', { name: /have an account/i });
+    expect(registerBtn).toBeInTheDocument();
+    fireEvent.click(registerBtn);
+    expect(mockOnChange).toBeCalledWith(SCREENS.REGISTER);
+  });
+
+  it("should send Reset link when link is clicked", () => {
+    renderWithContext();
+    const linkBtn = screen.getByRole('button', { name: /reset password/i });
+    expect(linkBtn).toBeInTheDocument();
+    fireEvent.click(linkBtn);
+    expect(mockOnChange).toBeCalledWith(SCREENS.RESET_PASSWORD);
+  });
 });
 
 describe("Register", () => {

@@ -1,5 +1,6 @@
 import { SIGNIN_MUTATION } from '../components/Signin/Index';
 import { SIGNUP_MUTATION } from '../components/Signin/Register';
+import { REQUEST_RESET_MUTATION } from '../components/Signin/RequestReset';
 import { CURRENT_USER_QUERY } from '../lib/User';
 
 export const SIGN_IN_MOCK = {
@@ -39,6 +40,20 @@ export const REGISTER_MOCK = {
       createUser: {
         id: "123"
       }
+    }
+  },
+};
+
+export const REQUEST_RESET_MOCK = {
+  request: {
+    query: REQUEST_RESET_MUTATION,
+    variables: {
+      email: 'email@test.io'
+    },
+  },
+  result: {
+    data: {
+      sendUserPasswordResetLink: null
     }
   },
 };

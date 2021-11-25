@@ -1,9 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
-import { SIGN_IN_MOCK, CURRENT_USER_MOCK, REGISTER_MOCK } from '../../__mocks__/user';
+import { SIGN_IN_MOCK, CURRENT_USER_MOCK, REGISTER_MOCK, REQUEST_RESET_MOCK } from '../../__mocks__/user';
 import SignIn from '../Signin/Index';
 import Register from '../Signin/Register';
+import RequestReset from '../Signin/RequestReset';
 import { SCREENS } from '../Signin/constant';
 
 const mockRouteChange = jest.fn();
@@ -157,7 +158,50 @@ describe("Register", () => {
 });
 
 describe("RequestReset", () => {
-  it.todo("should send the email when request reset button is clicked");
+  const mockOnChange = jest.fn();
+  function renderWithContext(signInMock = REQUEST_RESET_MOCK) {
+    return render(
+      <MockedProvider mocks={[signInMock, CURRENT_USER_MOCK]} addTypename={false} >
+        <RequestReset onChange={mockOnChange} />
+      </MockedProvider>
+    );
+  }
+
+  it("should show email validation", async () => {
+    renderWithContext();
+
+    const resetBtn = screen.getByRole('button', { name: /request reset/i });
+
+    expect(screen.getByRole('textbox', { name: /email/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /sick fits/i })).toBeInTheDocument();
+    expect(resetBtn).toBeInTheDocument();
+
+    fireEvent.click(resetBtn);
+
+    expect(await screen.findByText(/This field is required/i)).toBeInTheDocument();
+  });
+
+  it("should send the email when request reset button is clicked", async () => {
+    renderWithContext();
+
+    const email = screen.getByRole('textbox', { name: /email/i });
+    const resetBtn = screen.getByRole('button', { name: /request reset/i });
+
+    fireEvent.change(email, { target: { value: 'email@test.io' } });
+    fireEvent.click(resetBtn);
+
+    await waitFor(() => new Promise((res) => setTimeout(res, 0)));
+
+    expect(await screen.findByText(/¡Success! Check your email for a link/i)).toBeInTheDocument();
+  });
+
+  it("should send sign in link when link is clicked", () => {
+    renderWithContext();
+    const signInBtn = screen.getByRole('button', { name: /Return to Login/i });
+    expect(signInBtn).toBeInTheDocument();
+    fireEvent.click(signInBtn);
+    expect(mockOnChange).toBeCalledWith(SCREENS.SIGN_IN);
+  });
 });
 
 describe("Reset", () => {

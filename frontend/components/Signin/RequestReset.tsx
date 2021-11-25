@@ -8,11 +8,10 @@ import { Title, Form, FormContent, ButtonsContainer, ButtonLink, SuccessText } f
 import Error from '../ErrorMessage';
 import { SCREENS, FIELD_NAMES, VALIDATION_SCHEMA } from './constant';
 
-const REQUEST_RESET_MUTATION = gql`
+export const REQUEST_RESET_MUTATION = gql`
   mutation REQUEST_RESET_MUTATION($email: String!) {
     sendUserPasswordResetLink(email: $email) {
       code
-      message
     }
   }
 `;
@@ -40,6 +39,7 @@ export default function RequestReset({ onChange }: Props) {
         <FormElement>
           <label htmlFor="email">Email</label>
           <input
+            id="email"
             type="email"
             name="email"
             placeholder="example@email.com"

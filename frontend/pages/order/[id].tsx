@@ -6,7 +6,7 @@ import Error from '../../components/ErrorMessage';
 import { OrderItemContainer, Item, ItemsContainer, Details, OrderTitle } from '../../components/styles/Orders';
 import formatMoney from '../../lib/formatMoney';
 
-const SINGLE_ORDER_QUERY = gql`
+export const SINGLE_ORDER_QUERY = gql`
   query SINGLE_ORDER_QUERY($id: ID!) {
     order: Order(where: { id: $id }) {
       id
@@ -70,7 +70,7 @@ export default function SingleOrderPage({ query }: Props) {
         </Item>
         {order.items.map((item) => (
           <ItemsContainer key={item.id}>
-            <img src={item.photo.image.publicUrlTransformed} alt={item.title} />
+            <img src={item.photo.image.publicUrlTransformed} alt={item.name} />
             <Details>
               <h3>{item.name}</h3>
               <span>Qty: <strong>{item.quantity}</strong></span>

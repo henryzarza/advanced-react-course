@@ -1,3 +1,4 @@
+import { SINGLE_PRODUCT_QUERY, UPDATE_PRODUCT_MUTATION } from "../pages/update/[id]";
 import { SINGLE_ITEM_QUERY } from "../pages/product/[id]";
 import { ALL_PRODUCTS_QUERY } from "../components/Products/our-products";
 import { PAGINATION_QUERY } from "../components/Products/pagination";
@@ -145,6 +146,51 @@ export const SINGLE_ITEM_MOCK = {
             publicUrlTransformed: "https://res.cloudinary.com/wesbos/image/upload/v1579815935/sick-fits-keystone/5e2a13ff689b2835ae71d1a7.jpg"
           }
         }
+      }
+    }
+  }
+};
+
+export const SINGLE_PRODUCT_MOCK = {
+  request: {
+    query: SINGLE_PRODUCT_QUERY,
+    variables: { id: "1" }
+  },
+  result: {
+    data: {
+      Product: {
+        name: "KITH Hoodie",
+        price: 22999,
+        description: "Love this hoodie"
+      }
+    }
+  }
+};
+
+export const SINGLE_PRODUCT_ERROR_MOCK = {
+  request: {
+    query: SINGLE_PRODUCT_QUERY,
+    variables: { id: "1" }
+  },
+  result: {
+    errors: [new GraphQLError('Custom error')]
+  }
+};
+
+export const UPDATE_PRODUCT_MOCK = {
+  request: {
+    query: UPDATE_PRODUCT_MUTATION,
+    variables: {
+      id: "1",
+      name: "KITH Hoodie updated",
+      description: "Love this hoodie is the best in the World",
+      price: 22999
+    }
+  },
+  result: {
+    data: {
+      updateProduct: {
+        id: "1"
       }
     }
   }

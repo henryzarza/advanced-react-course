@@ -8,7 +8,7 @@ import Error from '../../components/ErrorMessage';
 import { FormElement } from '../../components/styles/Form';
 import { MainButton } from '../../components/styles/Button';
 
-const SINGLE_PRODUCT_QUERY = gql`
+export const SINGLE_PRODUCT_QUERY = gql`
   query SINGLE_PRODUCT_QUERY($id: ID!) {
     Product(where: { id: $id }) {
       name
@@ -18,7 +18,7 @@ const SINGLE_PRODUCT_QUERY = gql`
   }
 `;
 
-const UPDATE_PRODUCT_MUTATION = gql`
+export const UPDATE_PRODUCT_MUTATION = gql`
   mutation UPDATE_PRODUCT_MUTATION(
     $id: ID!
     $name: String
@@ -30,9 +30,6 @@ const UPDATE_PRODUCT_MUTATION = gql`
       data: { name: $name, description: $description, price: $price }
     ) {
       id
-      name
-      description
-      price
     }
   }
 `;
@@ -64,10 +61,9 @@ export default function UpdatePage({ query }: Props) {
         name: formData[SELL_FIELD_NAMES.NAME],
         description: formData[SELL_FIELD_NAMES.DESCRIPTION],
         price: Number(formData[SELL_FIELD_NAMES.PRICE]),
-      },
-      refetchQueries: [{ query: SINGLE_PRODUCT_QUERY, variables: { id: query.id } }]
+      }
     })
-    .then(() => alert('The info was updated'))
+    .then(() => console.log('The info was updated'))
     .catch(console.error);
   };
 
@@ -116,7 +112,7 @@ export default function UpdatePage({ query }: Props) {
         <MainButton type="submit" disabled={updateLoading}>
           Update product
         </MainButton>
-        {error || updateError && <Error error={error || updateError} />}
+        {(!!error || !!updateError) && <Error error={error || updateError} />}
       </Form>
     </Container>
   );

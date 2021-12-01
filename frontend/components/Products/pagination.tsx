@@ -85,7 +85,7 @@ export default function Pagination({ page }: { page: number }) {
   const mockArray = Array(pageCount).fill('');
 
   return (
-    <PaginationStyles>
+    <PaginationStyles data-testid='pagination'>
       <Head>
         <title>
           Sick Fits - Page {page} of {pageCount}

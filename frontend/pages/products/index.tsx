@@ -1,4 +1,4 @@
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import Main from '../../components/Products/main';

@@ -77,6 +77,8 @@ const Info = styled.div`
 export default function WishlistPage() {
   const me = useUser();
 
+  if (!me) return <h4>Loading...</h4>;
+
   return (
     <>
       <Head>

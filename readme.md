@@ -132,5 +132,7 @@ FRONTEND_URL="http://localhost:7777"
 ```
 
 - **Start frontend project**: Go to _frontend_ folder and run in your terminal `npm run dev`, go to your favorite browser and put `localhost:7777`
+  
+- **Run test for frontend project**: Go to _frontend_ folder and run in your terminal `npm test`
 
 Made with ❤️ by Henry Zarza

@@ -6,8 +6,6 @@ const LocalStateProvider = LocalStateContext.Provider;
 function CartStateProvider({ children }: { children: ReactChild }) {
   const [cartOpen, setCartOpen] = useState(false);
 
-  const toggleCart = () => setCartOpen(!cartOpen);
-
   const closeCart = () => setCartOpen(false);
 
   const openCart = () => setCartOpen(true);
@@ -16,10 +14,8 @@ function CartStateProvider({ children }: { children: ReactChild }) {
     <LocalStateProvider
       value={{
         cartOpen,
-        setCartOpen,
-        toggleCart,
         closeCart,
-        openCart,
+        openCart
       }}
     >
       {children}
@@ -31,4 +27,4 @@ function useCart() {
   return useContext(LocalStateContext);
 }
 
-export { CartStateProvider, useCart };
+export { CartStateProvider, useCart, LocalStateProvider };

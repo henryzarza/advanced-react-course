@@ -18,7 +18,7 @@ export default function Cart() {
       <CartStyles open={cartOpen}>
         <header>
           <Supreme>{me.name}'s Cart</Supreme>
-          <CloseButton onClick={closeCart}>&times;</CloseButton>
+          <CloseButton onClick={closeCart} aria-label="Close cart">&times;</CloseButton>
         </header>
         {me.cart.length === 0 ? (
           <EmptyCart>

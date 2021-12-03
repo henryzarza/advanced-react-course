@@ -1,8 +1,9 @@
+import { GraphQLError } from "graphql";
+
 import { SINGLE_PRODUCT_QUERY, UPDATE_PRODUCT_MUTATION } from "../pages/update/[id]";
 import { SINGLE_ITEM_QUERY } from "../pages/product/[id]";
 import { ALL_PRODUCTS_QUERY } from "../components/Products/our-products";
 import { PAGINATION_QUERY } from "../components/Products/pagination";
-import { GraphQLError } from "graphql";
 
 export const ALL_PRODUCTS_MOCK = {
   request: {

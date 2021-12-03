@@ -45,3 +45,8 @@ export function useUser() {
   const { data } = useQuery(CURRENT_USER_QUERY);
   return data?.authenticatedItem;
 }
+
+export function useUserLoader() {
+  const { data, loading } = useQuery(CURRENT_USER_QUERY);
+  return { loading, data: data?.authenticatedItem };
+}

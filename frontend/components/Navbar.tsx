@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 
-import { useUser, CURRENT_USER_QUERY } from '../lib/User';
+import { useUserLoader, CURRENT_USER_QUERY } from '../lib/User';
 import { useCart } from './Cart/cartState';
 import Cart from './Cart/Cart';
 import Search from './Search';
@@ -144,13 +144,15 @@ const BtnContainer = styled.div`
 /* End styles */
 
 export default function Navbar() {
-  const user = useUser();
+  const { loading, data } = useUserLoader();
   const { openCart } = useCart();
   const router = useRouter()
 
   const [signout] = useMutation(SIGN_OUT_MUTATION, {
     refetchQueries: [{ query: CURRENT_USER_QUERY }]
   });
+
+  if (loading) return <h4>Loading...</h4>;
 
   return (
     <NavContainer>
@@ -161,7 +163,7 @@ export default function Navbar() {
         <Link href="/products">
           <NavLink>Products</NavLink>
         </Link>
-        {user ? (
+        {data ? (
           <>
             <Link href="/orders">
               <NavLink>Orders</NavLink>
@@ -176,13 +178,13 @@ export default function Navbar() {
               <Search />
             )}
             <BtnContainer>
-              <IcButton type="button" onClick={openCart}>
+              <IcButton type="button" onClick={openCart} aria-label="Open cart">
                 <ShoppingCart width={24} height={24} />
                 <Badge>
-                  {user.cart.reduce((tally, cartItem) => tally + (cartItem.product ? cartItem.quantity : 0), 0)}
+                  {data.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}
                 </Badge>
               </IcButton>
-              <IcButton type="button" onClick={signout}>
+              <IcButton type="button" onClick={signout} aria-label="Sign out">
                 <Logout width={24} height={24} />
               </IcButton>
             </BtnContainer>

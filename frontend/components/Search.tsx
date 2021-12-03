@@ -2,12 +2,12 @@ import { useLazyQuery } from '@apollo/client';
 import { resetIdCounter, useCombobox } from 'downshift';
 import gql from 'graphql-tag';
 import debounce from 'lodash.debounce';
-import { useRouter } from 'next/dist/client/router';
+import { useRouter } from 'next/router'
 
 import { DropDown, DropDownItem, InputContainer } from './styles/Search';
 import { Search as IcSearch } from './Icons';
 
-const SEARCH_PRODUCTS_QUERY = gql`
+export const SEARCH_PRODUCTS_QUERY = gql`
   query SEARCH_PRODUCTS_QUERY($searchTerm: String!) {
     searchTerms: allProducts(
       where: {
